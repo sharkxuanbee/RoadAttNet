@@ -11,10 +11,10 @@ import tensorflow as tf
 
 @dataclass
 class Config:
-    rgb_dir: str = r"D:/YWWY/Projects/ZQproject/Road-extraction/archive/tiff_min/tiff_min_crop/img1_shuffle"
-    feature1_dir: str = r"D:/YWWY/Projects/ZQproject/Road-extraction/archive/tiff_min/tiff_min_crop/img2_shuffle"
-    feature2_dir: str = r"D:/YWWY/Projects/ZQproject/Road-extraction/archive/tiff_min/tiff_min_crop/img3_shuffle"
-    mask_dir: str = r"D:/YWWY/Projects/ZQproject/Road-extraction/archive/tiff_min/tiff_min_crop/mask_shuffle"
+    rgb_dir: str = r"/Volumes/data/data/Massachusetts/archive/tiff/train"
+    feature1_dir: str = r"/Volumes/data/data/Massachusetts/archive/tiff/train_blurred"
+    feature2_dir: str = r"/Volumes/data/data/Massachusetts/archive/tiff/train_cwl"
+    mask_dir: str = r"/Volumes/data/data/Massachusetts/archive/tiff/train_labels"
 
     img_height: int = 512
     img_width: int = 512

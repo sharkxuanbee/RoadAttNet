@@ -153,6 +153,22 @@ def train(cfg: Config):
 
     export_model(model, os.path.join(exp_dir, "export"), cfg)
 
+    # Automatically group everything needed for local inference
+    import shutil
+    download_dir = os.path.join(exp_dir, "DOWNLOAD_ME_FOR_LOCAL_INFERENCE")
+    ensure_dir(download_dir)
+    
+    if os.path.exists(best_path):
+        shutil.copy2(best_path, os.path.join(download_dir, "best.weights.h5"))
+    
+    cfg_path = os.path.join(exp_dir, "config.json")
+    if os.path.exists(cfg_path):
+        shutil.copy2(cfg_path, os.path.join(download_dir, "config.json"))
+        
+    logging.info("\n" + "*"*60)
+    logging.info(f"==> 训练已彻底完成！请将整个文件夹下载回本地: {download_dir}")
+    logging.info("*"*60 + "\n")
+
 
 def parse_args():
     p = argparse.ArgumentParser()

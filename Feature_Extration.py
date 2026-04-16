@@ -264,9 +264,10 @@ def display_all_features(image_path):
     return features
 
 
-def feature_extraction(image_path, output_dir):
+def feature_extraction(image_path, cwl_out_dir, blurred_out_dir):
 
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(cwl_out_dir, exist_ok=True)
+    os.makedirs(blurred_out_dir, exist_ok=True)
 
     features = display_all_features(image_path)
     # Combine all features with specific weights
@@ -368,11 +369,8 @@ def feature_extraction(image_path, output_dir):
     # 将combined_with_lines映射到0-255
     combined_with_lines = (features['combined_with_lines'] - np.min(features['combined_with_lines'])) / (np.max(features['combined_with_lines']) - np.min(features['combined_with_lines'])) * 255
     combined_with_lines = combined_with_lines.astype(np.uint8)
-    # Create the subdirectory if it doesn't exist
-    cwl_dir = os.path.join(output_dir, "cwl")
-    if not os.path.exists(cwl_dir):
-        os.makedirs(cwl_dir)
-    cv2.imwrite(os.path.join(output_dir, "cwl", f"{base_name}.tiff"), combined_with_lines)
+    cv2.imwrite(os.path.join(cwl_out_dir, f"{base_name}.tiff"), combined_with_lines)
+
     # 展示combined_all
     # plt.figure(figsize=(15, 10))
     # plt.imshow(features['combined_with_lines'], cmap='gray')
@@ -446,15 +444,11 @@ def feature_extraction(image_path, output_dir):
     # 将blurred映射到0-255
     blurred = (blurred - np.min(blurred)) / (np.max(blurred) - np.min(blurred)) * 255
     blurred = blurred.astype(np.uint8)
-    # Create the subdirectory if it doesn't exist
-    blurred_dir = os.path.join(output_dir, "blurred")
-    if not os.path.exists(blurred_dir):
-        os.makedirs(blurred_dir)
+    cv2.imwrite(os.path.join(blurred_out_dir, f"{base_name}.tiff"), blurred)
+
     # cv2.imwrite(os.path.join(output_dir, f"{base_name}_skeleton.tiff"), skeleton)
     # cv2.imwrite(os.path.join(output_dir, f"{base_name}_combined.tiff"), combined)
     # cv2.imwrite(os.path.join(output_dir, f"{base_name}_enhanced.tiff"), enhanced)
-    cv2.imwrite(os.path.join(output_dir, "blurred", f"{base_name}.tiff"), blurred)
-    # cv2.imwrite(os.path.join(output_dir, f"{base_name}_gabor_filtered.tiff"), gabor_filtered)
 
     # # 10. 保存各步骤结果（可选）
     # cv2.imwrite("enhanced.png", enhanced)
